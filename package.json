@@ -1,0 +1,19 @@
+{
+  "name": "manager-products-project",
+  "version": "1.0.0",
+  "description": "",
+  "workspaces": [
+    "sources/*"
+  ],
+  "keywords": [
+    "products",
+    "manager",
+    "project",
+    "manager products"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}
