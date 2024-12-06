@@ -33,10 +33,10 @@ export class User {
   })
   documentType: string
 
-  @Column()
+  @Column({ nullable: true })
   documentNumber: number
 
-  @Column()
+  @Column({ nullable: true })
   ruc: number
 
   @Column({ nullable: false, default: true })
