@@ -1,17 +1,21 @@
+'use client'
+
 import { persistentMap } from '@nanostores/persistent'
 
-interface Cart {
+export interface ProductCart {
+  productId: number
+  quantity: number
+  price: number
+}
+
+export interface Cart {
   userId: number
   paymentMethodId: number
-  products: {
-    productId: number
-    quantity: number
-    price: number
-  }[]
+  products: ProductCart[]
 }
 
 const initialState: Cart = {
-  userId: JSON.parse(localStorage.getItem('user') ?? '{}').id || 0,
+  userId: 0,
   paymentMethodId: 0,
   products: [],
 }

@@ -1,15 +1,18 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useStore } from '@nanostores/react'
 import { cartStore } from '@/stores/cart'
 
 export function Header() {
   const { products } = useStore(cartStore)
+  const [quantity, setQuantity] = useState(0)
 
-  const totalQuantity = products.reduce(
-    (sum, product) => sum + product.quantity,
-    0,
+  useEffect(
+    () =>
+      setQuantity(products.reduce((sum, product) => sum + product.quantity, 0)),
+    [products],
   )
 
   return (
@@ -53,11 +56,9 @@ export function Header() {
             Cart
           </button>
 
-          {totalQuantity > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-              {totalQuantity}
-            </span>
-          )}
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            {quantity}
+          </span>
         </Link>
       </div>
     </header>
