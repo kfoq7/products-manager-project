@@ -2,12 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   Relation,
   UpdateDateColumn,
 } from 'typeorm'
 import { Order } from './order.entity'
+import { Role } from './role.entity'
 
 @Entity()
 export class User {
@@ -44,6 +46,9 @@ export class User {
 
   @OneToMany(() => Order, order => order.user)
   orders: Relation<Order[]>
+
+  @ManyToMany(() => Role, role => role.users)
+  roles: Relation<[Role]>
 
   @CreateDateColumn()
   createdAt: Date
