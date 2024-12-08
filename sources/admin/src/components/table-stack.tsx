@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -8,6 +9,7 @@ import {
 
 export interface TableStackOptions<T> {
   data: T[]
+  columns: ColumnDef<T>[]
 }
 
 export interface Props<T> extends TableStackOptions<T> {
@@ -15,11 +17,11 @@ export interface Props<T> extends TableStackOptions<T> {
 }
 
 export function TableStack<T>(props: Props<T>) {
-  const { data, isLoding } = props
+  const { data, columns, isLoding } = props
 
   const table = useReactTable({
-    data: data,
-    columns: [],
+    data,
+    columns,
     getCoreRowModel: getCoreRowModel(),
   })
 
@@ -52,6 +54,7 @@ export function TableStack<T>(props: Props<T>) {
                 {row.getVisibleCells().map(cell => (
                   <td
                     key={cell.id}
+                    style={{ width: cell.column.getSize() }}
                     className="px-6 py-4 text-sm text-gray-700 whitespace-nowrap"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -70,6 +73,20 @@ export function TableStack<T>(props: Props<T>) {
             </tr>
           )}
         </tbody>
+        <tfoot>
+          {table.getFooterGroups().map(footerGroup => (
+            <tr key={footerGroup.id}>
+              {footerGroup.headers.map(footer => (
+                <td key={footer.id}>
+                  {flexRender(
+                    footer.column.columnDef.footer,
+                    footer.getContext(),
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tfoot>
       </table>
     </div>
   )

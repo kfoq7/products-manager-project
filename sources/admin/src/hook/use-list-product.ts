@@ -9,7 +9,7 @@ export function useListProducts() {
   })
 
   return {
-    products: data,
+    products: data ?? [],
     isLodingProducts: isLoading,
     isErrorProducts: isError,
   }
