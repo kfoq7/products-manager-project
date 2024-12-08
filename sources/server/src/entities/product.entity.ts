@@ -21,7 +21,18 @@ export class Product {
   @Column('text', { nullable: true })
   description: string
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('decimal', {
+    precision: 10,
+    scale: 2,
+    transformer: {
+      to(value) {
+        return value
+      },
+      from(value) {
+        return parseFloat(value)
+      },
+    },
+  })
   price: number
 
   @Column({ default: true })

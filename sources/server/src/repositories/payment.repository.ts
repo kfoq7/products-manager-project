@@ -23,7 +23,8 @@ export class PaymentRepository {
   }
 
   create(paymentDto: CreatePaymentDto) {
-    const { paymentDetails, ...restPaymentDto } = paymentDto
+    const { paymentMethodId, paymentDetails, userId, ...restPaymentDto } =
+      paymentDto
 
     const detailsMapped = paymentDetails.map(({ productId, ...restItem }) => ({
       ...restItem,
@@ -34,6 +35,12 @@ export class PaymentRepository {
 
     const payment = this.paymentRepository.create({
       ...restPaymentDto,
+      user: {
+        id: userId,
+      },
+      paymentMethod: {
+        id: paymentMethodId,
+      },
       paymetDetail: detailsMapped,
     })
 

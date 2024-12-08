@@ -3,31 +3,31 @@ import {
   EventSubscriber,
   InsertEvent,
 } from 'typeorm'
-import { OrderItem } from '../entities/order-item.entity'
+import { PaymentDetail } from '../entities/payment-detail.entity'
 import { Product } from '../entities/product.entity'
 
 @EventSubscriber()
-export class OrderItemSubscriber
-  implements EntitySubscriberInterface<OrderItem>
+export class PaymentDetailSubscriber
+  implements EntitySubscriberInterface<PaymentDetail>
 {
   listenTo() {
-    return OrderItem
+    return PaymentDetail
   }
 
-  async afterInsert(event: InsertEvent<OrderItem>): Promise<void> {
-    const orderItem = event.entity
+  async afterInsert(event: InsertEvent<PaymentDetail>): Promise<void> {
+    const paymentDetail = event.entity
 
     const productRepository = event.manager.getRepository(Product)
 
     const productToUpdate = await productRepository.findOne({
       where: {
-        id: orderItem.product.id,
+        id: paymentDetail.product.id,
       },
     })
 
     if (!productToUpdate) return
 
-    const updatedStock = productToUpdate.stock + orderItem.quantity
+    const updatedStock = productToUpdate.stock - paymentDetail.quantity
 
     productRepository.merge(productToUpdate, {
       stock: updatedStock,
