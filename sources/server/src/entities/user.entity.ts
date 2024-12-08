@@ -2,7 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   Relation,
@@ -10,6 +12,7 @@ import {
 } from 'typeorm'
 import { Order } from './order.entity'
 import { Role } from './role.entity'
+import { Payment } from './payment.entity'
 
 @Entity()
 export class User {
@@ -25,7 +28,8 @@ export class User {
   @Column()
   password: string
 
-  @Column({ default: 'customer' })
+  @ManyToOne(() => Role, role => role.users)
+  @JoinColumn()
   role: string
 
   @Column({
@@ -47,8 +51,8 @@ export class User {
   @OneToMany(() => Order, order => order.user)
   orders: Relation<Order[]>
 
-  @ManyToMany(() => Role, role => role.users)
-  roles: Relation<[Role]>
+  @OneToMany(() => Payment, payment => payment.user)
+  payments: Relation<Payment[]>
 
   @CreateDateColumn()
   createdAt: Date

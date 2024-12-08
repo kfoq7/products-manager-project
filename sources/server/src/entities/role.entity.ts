@@ -1,13 +1,15 @@
-import { 
-  Column, 
-  CreateDateColumn, 
-  ManyToMany, 
-  PrimaryGeneratedColumn, 
-  Relation, 
-  UpdateDateColumn 
-} from "typeorm"
-import { User } from "./user.entity"
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Relation,
+  UpdateDateColumn,
+} from 'typeorm'
+import { User } from './user.entity'
 
+@Entity()
 export class Role {
   @PrimaryGeneratedColumn()
   id: number
@@ -18,7 +20,7 @@ export class Role {
   @Column()
   description: string
 
-  @ManyToMany(() => User, user => user.roles)
+  @OneToMany(() => User, user => user.role)
   users: Relation<User[]>
 
   @Column({ nullable: false, default: true })

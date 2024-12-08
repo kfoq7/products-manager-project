@@ -29,7 +29,7 @@ export class OrderItemSubscriber
 
     if (!productToUpdate) return
 
-    const updatedStock = productToUpdate.stock - orderItem.quantity
+    const updatedStock = productToUpdate.stock + orderItem.quantity
 
     productRepository.merge(productToUpdate, {
       stock: updatedStock,
