@@ -5,10 +5,30 @@ import {
   FiMenu,
   FiHome,
   FiShoppingCart,
-  FiUser,
-  FiSettings,
+  FiShoppingBag,
+  // FiUser,
+  // FiSettings,
 } from 'react-icons/fi'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
+
+const links = [
+  {
+    name: 'Inicio',
+    to: '/',
+    icon: <FiHome />,
+  },
+  {
+    name: 'Ventas',
+    to: '/sales',
+    icon: <FiShoppingCart />,
+  },
+  {
+    name: 'Productos',
+    to: '/products',
+    icon: <FiShoppingBag />,
+  },
+]
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,7 +52,18 @@ export function Sidebar() {
 
       <nav className="mt-4">
         <ul>
-          <li className="flex items-center space-x-4 p-3 hover:bg-gray-700 transition cursor-pointer">
+          {links.map(({ name, to, icon }) => (
+            <li key={name}>
+              <Link
+                href={to}
+                className="flex items-center space-x-4 p-3 hover:bg-gray-700 transition cursor-pointer"
+              >
+                {icon}
+                {isOpen && <span>{name}</span>}
+              </Link>
+            </li>
+          ))}
+          {/* <li className="flex items-center space-x-4 p-3 hover:bg-gray-700 transition cursor-pointer">
             <FiHome />
             {isOpen && <span>Home</span>}
           </li>
@@ -47,7 +78,7 @@ export function Sidebar() {
           <li className="flex items-center space-x-4 p-3 hover:bg-gray-700 transition cursor-pointer">
             <FiSettings />
             {isOpen && <span>Settings</span>}
-          </li>
+          </li> */}
         </ul>
       </nav>
     </div>
