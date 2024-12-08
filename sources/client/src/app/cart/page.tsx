@@ -4,27 +4,32 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@nanostores/react'
 import {
+  increaseQuantity,
+  decreaseQuantity,
   cartStore,
-  type ProductCart,
+  ProductCart,
   removeProduct,
   updatePaymentMethodId,
 } from '@/stores/cart'
+import { usePaymentMutation } from '@/hooks/mutations/use-payment-mutation'
 
 export default function Cart() {
   const router = useRouter()
 
-  const { products: productsStore, paymentMethodId } = useStore(cartStore)
-  const [products, setProduts] = useState<ProductCart[]>([])
+  const {
+    paymentDetails: productsStore,
+    totalPrice: totalPriceStore,
+    paymentMethodId,
+  } = useStore(cartStore)
 
+  const [products, setProducts] = useState<ProductCart[]>([])
+  const [totalPrice, setTotalPrice] = useState<number>(0)
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<number>(paymentMethodId)
 
-  const totalPrice = products.reduce(
-    (sum, product) => sum + product.price * product.quantity,
-    0,
-  )
+  const { registerPaymentAsync } = usePaymentMutation()
 
-  const handlePay = () => {
+  const handlePay = async () => {
     if (products.length === 0) {
       alert('Your cart is empty. Add products before proceeding.')
       return
@@ -41,29 +46,31 @@ export default function Cart() {
     if (confirmPayment) {
       alert('Payment successful!')
 
+      await registerPaymentAsync(cartStore.get())
+
       cartStore.set({
         ...cartStore.get(),
         paymentMethodId: selectedPaymentMethod,
-        products: [],
+        totalPrice: 0,
+        paymentDetails: [],
       })
 
       router.push('/thank-you')
     }
   }
 
-  // Handle payment method selection
   const handlePaymentMethodChange = (methodId: number) => {
     setSelectedPaymentMethod(methodId)
     updatePaymentMethodId(methodId)
   }
 
   useEffect(() => {
-    setProduts(productsStore)
-  }, [productsStore])
+    setProducts(productsStore)
+    setTotalPrice(totalPriceStore)
+  }, [productsStore, totalPriceStore])
 
   return (
     <div className="container mx-auto py-8 grid grid-cols-1 md:grid-cols-[1fr_480px] gap-8">
-      {/* Cart Items Table */}
       <div>
         <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
 
@@ -95,10 +102,36 @@ export default function Cart() {
                 {products.map(product => (
                   <tr key={product.productId}>
                     <td className="py-2 px-4 border-b">{`Product ${product.productId}`}</td>
-                    <td className="py-2 px-4 border-b">{product.quantity}</td>
-                    <td className="py-2 px-4 border-b">${product.price}</td>
+                    <td className="py-2 px-4 border-b flex items-center gap-2">
+                      <button
+                        onClick={() =>
+                          decreaseQuantity(
+                            product.productId,
+                            product.totalPrice / product.quantity,
+                          )
+                        }
+                        className="text-gray-600 hover:text-gray-800 font-medium"
+                      >
+                        -
+                      </button>
+                      {product.quantity}
+                      <button
+                        onClick={() =>
+                          increaseQuantity(
+                            product.productId,
+                            product.totalPrice / product.quantity,
+                          )
+                        }
+                        className="text-gray-600 hover:text-gray-800 font-medium"
+                      >
+                        +
+                      </button>
+                    </td>
                     <td className="py-2 px-4 border-b">
-                      ${product.price * product.quantity}
+                      ${(product.totalPrice / product.quantity).toFixed(2)}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      ${product.totalPrice.toFixed(2)}
                     </td>
                     <td className="py-2 px-4 border-b">
                       <button
@@ -116,7 +149,6 @@ export default function Cart() {
         )}
       </div>
 
-      {/* Payment Method and Total Section */}
       <div className="bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4">Checkout</h2>
 

@@ -1,7 +1,13 @@
 import { useMutation } from '@tanstack/react-query'
+import { createPayment } from '@/service/payment.service'
 
 export function usePaymentMutation() {
-  const {} = useMutation({})
+  const { mutate, mutateAsync } = useMutation({
+    mutationFn: createPayment,
+  })
 
-  return {}
+  return {
+    registerPayment: mutate,
+    registerPaymentAsync: mutateAsync,
+  }
 }
