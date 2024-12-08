@@ -1,7 +1,7 @@
 'use client'
 
 // import Image from 'next/image'
-import { useListProduct } from '@/hooks/use-list-product'
+import { useListProduct } from '@/hooks/queries/use-list-product'
 import { addProduct } from '@/stores/cart'
 
 export default function ProductsPage() {

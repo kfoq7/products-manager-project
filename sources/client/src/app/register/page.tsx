@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useRegister } from '@/hooks/auth/use-register'
+import { useRegister } from '@/hooks/queries/auth/use-register'
 import Link from 'next/link'
 
 export default function Register() {
