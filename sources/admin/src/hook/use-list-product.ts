@@ -1,6 +1,6 @@
-import { getAllProducts } from '@/service/products'
-import { Product } from '@/types/product'
 import { useQuery } from '@tanstack/react-query'
+import { getAllProducts } from '@/service/products.service'
+import { Product } from '@/types/product'
 
 export function useListProducts() {
   const { data, isLoading, isError } = useQuery<Product[]>({
