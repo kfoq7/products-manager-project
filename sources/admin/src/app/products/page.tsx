@@ -53,8 +53,42 @@ const columns: ColumnDef<Product>[] = [
   },
 ]
 
+// const categories = [
+//   { id: 1, name: 'Categoría 1' },
+//   { id: 2, name: 'Categoría 2' },
+//   { id: 3, name: 'Categoría 3' },
+// ]
+
 export default function Products() {
   const { products, isLodingProducts } = useListProducts()
+
+  // const [formData, setFormData] = useState({
+  //   name: '',
+  //   description: '',
+  //   price: '',
+  //   categoryId: '',
+  // })
+
+  // const { saveProduct, isLoading, isError, errorMessage } = useSaveProduct()
+
+  // const handleChange = e => {
+  //   const { name, value } = e.target
+  //   setFormData(prevFormData => ({
+  //     ...prevFormData,
+  //     [name]: value,
+  //   }))
+  // }
+
+  // const handleSubmit = async e => {
+  //   e.preventDefault()
+
+  //   try {
+  //     await saveProduct(formData)
+  //     setFormData({ name: '', price: '', description: '', categoryId: '' })
+  //   } catch (error) {
+  //     console.error('No se pudo guardar el producto:', error)
+  //   }
+  // }
 
   return (
     <div className="p-4">
