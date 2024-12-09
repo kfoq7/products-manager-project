@@ -1,11 +1,11 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { TableStack } from '@/components/table-stack'
 import { useListProducts } from '@/hook/use-list-product'
 import { useQueryParams } from '@/hook/use-query-params'
 import { Product } from '@/types/product'
 import { ColumnDef } from '@tanstack/react-table'
-import dynamic from 'next/dynamic'
 
 const ProductForm = dynamic(() => import('@/components/product-form'), {
   ssr: false,
@@ -45,49 +45,26 @@ const columns: ColumnDef<Product>[] = [
     ),
   },
   {
+    header: 'Precio',
+    accessorKey: 'price',
+    cell: ({ row }) => <div className="text-left">{row.original.price}</div>,
+  },
+  {
+    header: 'Stock',
+    accessorKey: 'stock',
+    cell: ({ row }) => <div className="text-left">{row.original.stock}</div>,
+  },
+  {
     header: 'Acciones',
     cell: ({ row }) => {
-      // TODO: Add button action to edit selected product.
       return <Actions productId={row.original.id} />
     },
   },
 ]
 
-// const categories = [
-//   { id: 1, name: 'Categoría 1' },
-//   { id: 2, name: 'Categoría 2' },
-//   { id: 3, name: 'Categoría 3' },
-// ]
-
 export default function Products() {
   const { products, isLodingProducts } = useListProducts()
 
-  // const [formData, setFormData] = useState({
-  //   name: '',
-  //   description: '',
-  //   price: '',
-  //   categoryId: '',
-  // })
-
-  // const { saveProduct, isLoading, isError, errorMessage } = useSaveProduct()
-
-  // const handleChange = e => {
-  //   const { name, value } = e.target
-  //   setFormData(prevFormData => ({
-  //     ...prevFormData,
-  //     [name]: value,
-  //   }))
-  // }
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault()
-
-  //   try {
-  //     await saveProduct(formData)
-  //     setFormData({ name: '', price: '', description: '', categoryId: '' })
-  //   } catch (error) {
-  //     console.error('No se pudo guardar el producto:', error)
-  //   }
   // }
 
   return (

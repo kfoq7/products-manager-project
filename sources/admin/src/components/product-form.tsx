@@ -1,37 +1,25 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import AsyncSelect from 'react-select/async'
-// import { useSearchParams } from 'next/navigation'
 import { useProductMutation } from '@/hook/mutations/use-product-mutation'
 import { getAllCategories } from '@/service/category.service'
 import { useProductUpdateMutation } from '@/hook/mutations/use-product-update-mutation'
 import { useQueryParams } from '@/hook/use-query-params'
-// import { getProductById } from '@/service/product.service'
+import { useProductById } from '@/hook/queries/use-product-by-id'
 
 export default function ProductForm() {
-  // const searchParams = useSearchParams()
-  // const productId = searchParams.get('productId')
-  const router = useRouter()
-
-  // const [productId, setProductId] = useState()
-
-  const { searchParams } = useQueryParams()
+  const { searchParams, removeQueryParam } = useQueryParams()
 
   const productId = searchParams.get('productId')
 
   const { register, handleSubmit, reset, setValue } = useForm()
   const [categoryId, setCategoryId] = useState<number | null>(null)
 
+  const { product } = useProductById(productId)
   const { saveProduct } = useProductMutation()
   const { updateProduct } = useProductUpdateMutation()
-
-  useEffect(() => {
-    const productId = searchParams.get('productId')
-    console.log(productId)
-  }, [searchParams])
 
   const onSubmit = async (data: {
     name?: string
@@ -47,15 +35,24 @@ export default function ProductForm() {
     }
 
     if (productId) {
-      // Edit mode: update the product
-      await updateProduct(parseInt(productId, 10), productPayload)
+      updateProduct({
+        ...productPayload,
+        id: parseInt(productId),
+      })
     } else {
-      // Create mode: save a new product
       saveProduct(productPayload)
     }
 
     reset()
   }
+
+  useEffect(() => {
+    if (!productId) return
+    setValue('name', product?.name)
+    setValue('description', product?.description)
+    setValue('price', product?.price)
+    setValue('stock', product?.stock)
+  }, [productId, product, setValue])
 
   return (
     <form
@@ -153,13 +150,17 @@ export default function ProductForm() {
       <div className="mt-4 flex items-center gap-x-2">
         <button
           type="submit"
+          onClick={() => removeQueryParam('productId')}
           className="self-end bg-blue-500 text-white py-2 rounded-md transition-colors hover:bg-blue-600 px-3"
         >
           {productId ? 'Actualizar Producto' : 'Guardar Producto'}
         </button>
         <button
           type="button"
-          onClick={() => reset()}
+          onClick={() => {
+            removeQueryParam('productId')
+            reset()
+          }}
           className="self-end bg-gray-400 text-white py-2 rounded-md transition-colors hover:bg-gray-500 px-3"
         >
           Cancelar

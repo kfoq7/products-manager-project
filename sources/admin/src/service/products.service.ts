@@ -5,7 +5,7 @@ export const getAllProducts = async () => {
   return client.get('/product').then(response => response.data)
 }
 
-export const getProductById = async (productId: number) => {
+export const getProductById = async (productId: number): Promise<Product> => {
   return client.get(`/product/${productId}`).then(response => response.data)
 }
 
@@ -15,6 +15,6 @@ export const createProduct = async (product: Partial<Product>) => {
 
 export const updateProduct = async (product: Partial<Product>) => {
   return client
-    .put(`/product/${product.id}}`, product)
+    .put(`/product/${product.id}`, product)
     .then(response => response.data)
 }
