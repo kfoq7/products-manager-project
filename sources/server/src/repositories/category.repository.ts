@@ -14,6 +14,14 @@ export class CategoryRepository {
     return this.categoryRepository.find()
   }
 
+  findById(categoryId: number) {
+    return this.categoryRepository.findOne({
+      where: {
+        id: categoryId,
+      },
+    })
+  }
+
   create(data: CreateCategoryDto) {
     const category = this.categoryRepository.create(data)
     return this.categoryRepository.save(category)

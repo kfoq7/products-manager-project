@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -20,4 +21,7 @@ export class Category {
 
   @OneToMany(() => Product, product => product.category)
   products: Relation<Product[]>
+
+  @CreateDateColumn()
+  createdAt: number
 }

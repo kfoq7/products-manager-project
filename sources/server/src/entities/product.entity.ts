@@ -41,6 +41,9 @@ export class Product {
   @Column()
   stock: number
 
+  @Column({ default: true })
+  status: boolean
+
   @ManyToOne(() => Category, category => category.products, {
     cascade: ['insert', 'recover'],
   })

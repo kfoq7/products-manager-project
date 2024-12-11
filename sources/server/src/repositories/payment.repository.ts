@@ -11,13 +11,47 @@ export class PaymentRepository {
   }
 
   findAll() {
-    return this.paymentRepository.find()
+    return this.paymentRepository.find({
+      relations: {
+        paymentMethod: true,
+        user: true,
+        paymetDetail: true,
+      },
+      select: {
+        user: {
+          id: true,
+          email: true,
+        },
+      },
+    })
   }
 
   findById(paymentId: number) {
     return this.paymentRepository.findOne({
       where: {
         id: paymentId,
+      },
+      relations: {
+        paymentMethod: true,
+        user: true,
+        paymetDetail: {
+          product: true,
+        },
+      },
+      select: {
+        user: {
+          id: true,
+          email: true,
+        },
+        paymetDetail: {
+          id: true,
+          quantity: true,
+          totalPrice: true,
+          product: {
+            id: true,
+            name: true,
+          },
+        },
       },
     })
   }

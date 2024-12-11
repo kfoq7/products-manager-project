@@ -51,6 +51,11 @@ export class ProductRepository {
       relations: {
         category: true,
       },
+      select: {
+        category: {
+          id: true,
+        },
+      },
     })
 
     if (!productToUpdate) return null
@@ -63,6 +68,8 @@ export class ProductRepository {
         id: categoryId,
       },
     })
+
+    console.log(productToUpdate)
 
     return this.productRepository.save(productToUpdate)
   }

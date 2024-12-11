@@ -1,11 +1,13 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   Relation,
+  UpdateDateColumn,
 } from 'typeorm'
 import { User } from './user.entity'
 import { PaymentDetail } from './payment-detail.entity'
@@ -31,4 +33,10 @@ export class Payment {
     cascade: true,
   })
   paymetDetail: Relation<PaymentDetail[]>
+
+  @CreateDateColumn()
+  createdAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
 }

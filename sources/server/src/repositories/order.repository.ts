@@ -11,7 +11,13 @@ export class OrderRepository {
   }
 
   findAll() {
-    return this.orderRepository.find()
+    return this.orderRepository.find({
+      relations: {
+        items: {
+          product: true,
+        },
+      },
+    })
   }
 
   findById(orderId: number) {
@@ -19,11 +25,16 @@ export class OrderRepository {
       where: {
         id: orderId,
       },
+      relations: {
+        items: {
+          product: true,
+        },
+      },
     })
   }
 
   create(orderDto: CreateOrderDto) {
-    const { items, ...restOrderDto } = orderDto
+    const { items, userId, ...restOrderDto } = orderDto
 
     const itemsMapped = items.map(({ productId, ...restItem }) => ({
       ...restItem,
@@ -34,6 +45,9 @@ export class OrderRepository {
 
     const order = this.orderRepository.create({
       ...restOrderDto,
+      user: {
+        id: userId,
+      },
       items: itemsMapped,
     })
 

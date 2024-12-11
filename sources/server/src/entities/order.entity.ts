@@ -27,6 +27,9 @@ export class Order {
   @Column('decimal', { precision: 10, scale: 2 })
   total: number
 
+  @Column('text', { nullable: true })
+  description: string
+
   @Column({ default: 'pending' })
   status: string
 

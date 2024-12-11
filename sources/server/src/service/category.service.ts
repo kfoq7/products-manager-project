@@ -12,6 +12,10 @@ export class CategoryService {
     return this.categoryRepository.findAll()
   }
 
+  findCategoryById(categoryId: number) {
+    return this.categoryRepository.findById(categoryId)
+  }
+
   createCategory(data: CreateCategoryDto) {
     return this.categoryRepository.create(data)
   }

@@ -14,6 +14,18 @@ export const getAllCategories = async (req: Request, res: Response) => {
   }
 }
 
+export const getCategoryById = async (req: Request, res: Response) => {
+  try {
+    const categories = await categoryService.findCategoryById(
+      Number(req.params.categoryId),
+    )
+
+    res.status(200).json(categories)
+  } catch (error) {
+    handleReponseError(res, error)
+  }
+}
+
 export const createCategory = async (req: Request, res: Response) => {
   try {
     const product = await categoryService.createCategory(req.body)

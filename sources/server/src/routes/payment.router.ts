@@ -1,7 +1,15 @@
 import { Router } from 'express'
-import { createPayment } from '../controllers/payment.controller'
+import {
+  createPayment,
+  getAllPayments,
+  getPayemntById,
+} from '../controllers/payment.controller'
 
 const router = Router()
+
+router.get('/', getAllPayments)
+
+router.get('/:paymentId', getPayemntById)
 
 router.post('/', createPayment)
 
