@@ -28,6 +28,16 @@ const links = [
     to: '/products',
     icon: <FiShoppingBag />,
   },
+  {
+    name: 'Ordenes',
+    to: '/orders',
+    icon: <FiShoppingBag />,
+  },
+  {
+    name: 'Categorias',
+    to: '/category',
+    icon: <FiShoppingBag />,
+  },
 ]
 
 export function Sidebar() {

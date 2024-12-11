@@ -17,7 +17,6 @@ export function useQueryParams() {
   }
 
   const removeQueryParam = (key: string) => {
-    console.log(key)
     const current = new URLSearchParams(Array.from(searchParams.entries()))
     current.delete(key)
     updateQuery(current)

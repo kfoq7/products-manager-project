@@ -8,6 +8,7 @@ import { getAllCategories } from '@/service/category.service'
 import { useProductUpdateMutation } from '@/hook/mutations/use-product-update-mutation'
 import { useQueryParams } from '@/hook/use-query-params'
 import { useProductById } from '@/hook/queries/use-product-by-id'
+import { toast } from 'react-toastify'
 
 export default function ProductForm() {
   const { searchParams, removeQueryParam } = useQueryParams()
@@ -27,6 +28,11 @@ export default function ProductForm() {
     price?: string
     stock?: string
   }) => {
+    if (!categoryId || categoryId === 0) {
+      toast.warn('Seleccione una categoria')
+      return
+    }
+
     const productPayload = {
       ...data,
       stock: parseInt(data.stock ?? '0', 10),
