@@ -46,7 +46,7 @@ export default function Register() {
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Name
+              Nombre
             </label>
             <input
               id="name"
@@ -80,7 +80,7 @@ export default function Register() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              Password
+              Contraseña
             </label>
             <input
               id="password"

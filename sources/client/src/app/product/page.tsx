@@ -1,6 +1,5 @@
 'use client'
 
-// import Image from 'next/image'
 import { useListProduct } from '@/hooks/queries/use-list-product'
 import { addProduct } from '@/stores/cart'
 
@@ -10,14 +9,16 @@ export default function ProductsPage() {
   if (isLoadingProducts) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-xl text-gray-500">Loading products...</p>
+        <p className="text-xl text-gray-500">Cargado productos...</p>
       </div>
     )
   }
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8 text-center">All Products</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">
+        Todos nuestro productos
+      </h1>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products &&
           products.map(product => (

@@ -72,29 +72,29 @@ export default function Cart() {
   return (
     <div className="container mx-auto py-8 grid grid-cols-1 md:grid-cols-[1fr_480px] gap-8">
       <div>
-        <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+        <h1 className="text-3xl font-bold mb-6">Tu carrito</h1>
 
         {products.length === 0 ? (
-          <p className="text-center text-gray-500">Your cart is empty.</p>
+          <p className="text-center text-gray-500">Tu carrito está vacio.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border rounded-lg">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b text-left font-medium text-gray-600">
-                    Product Name
+                    Nombre del producto
                   </th>
                   <th className="py-2 px-4 border-b text-left font-medium text-gray-600">
-                    Quantity
+                    Cantidad
                   </th>
                   <th className="py-2 px-4 border-b text-left font-medium text-gray-600">
-                    Price
+                    Precio
                   </th>
                   <th className="py-2 px-4 border-b text-left font-medium text-gray-600">
                     Total
                   </th>
                   <th className="py-2 px-4 border-b text-left font-medium text-gray-600">
-                    Actions
+                    Acciones
                   </th>
                 </tr>
               </thead>
@@ -138,7 +138,7 @@ export default function Cart() {
                         onClick={() => removeProduct(product.productId)}
                         className="text-red-500 hover:text-red-700 font-medium"
                       >
-                        Remove
+                        Eliminar
                       </button>
                     </td>
                   </tr>
@@ -150,11 +150,11 @@ export default function Cart() {
       </div>
 
       <div className="bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+        <h2 className="text-2xl font-bold mb-4">Pago</h2>
 
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Select Payment Method
+            Seleciona Metodo de Pago
           </label>
           <select
             value={selectedPaymentMethod}

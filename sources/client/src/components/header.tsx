@@ -6,13 +6,15 @@ import { useStore } from '@nanostores/react'
 import { cartStore } from '@/stores/cart'
 
 export function Header() {
-  const { products } = useStore(cartStore)
+  const { paymentDetails } = useStore(cartStore)
   const [quantity, setQuantity] = useState(0)
 
   useEffect(
     () =>
-      setQuantity(products.reduce((sum, product) => sum + product.quantity, 0)),
-    [products],
+      setQuantity(
+        paymentDetails.reduce((sum, product) => sum + product.quantity, 0),
+      ),
+    [paymentDetails],
   )
 
   return (

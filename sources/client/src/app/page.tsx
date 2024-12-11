@@ -57,12 +57,12 @@ export default function Home() {
                 {product.name}
               </h3>
               <p className="text-gray-600">${product.price.toFixed(2)}</p>
-              <Link
-                href={`/products/${product.id}`}
-                className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600"
-              >
-                View Details
-              </Link>
+              {/* <Link
+                  href={`/products/${product.id}`}
+                  className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600"
+                >
+                  Ver detalle
+                </Link> */}
             </div>
           ))}
         </section>

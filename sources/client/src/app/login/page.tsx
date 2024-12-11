@@ -38,7 +38,7 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Iniciar sesión</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -62,7 +62,7 @@ export default function LoginPage() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              Password
+              Contraseña
             </label>
             <input
               id="password"
@@ -78,7 +78,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
           >
-            Login
+            Iniciar sesión
           </button>
         </form>
 
